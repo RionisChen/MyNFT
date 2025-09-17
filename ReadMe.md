@@ -16,5 +16,6 @@
 - OpenZeppelin（合约安全库）
 ## 展示
 ![前端页面展示](./frontend/images/frontend.png)
+![meta mask钱包展示](./frontend/images/metamask.png)
 
 ### 如有建议或漏洞，欢迎PR！
