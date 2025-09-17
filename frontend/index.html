@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyNFT - 头像生成器</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.1/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 MyNFT</h1>
+            <p>独特头像NFT生成器</p>
+        </div>
+
+        <!-- 钱包连接区域 -->
+        <div class="wallet-section">
+            <div class="wallet-info">
+                <div class="wallet-status">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="walletAddress">未连接钱包</span>
+                </div>
+                <div>
+                    <span id="walletBalance">0 ETH</span>
+                    <button class="btn btn-primary" id="connectWallet">连接钱包</button>
+                    <button class="btn btn-secondary" id="disconnectWallet" style="display:none;">断开钱包连接</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 合约统计 -->
+        <div class="card">
+            <h2>📊 合约统计</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSupply">0</div>
+                    <div class="stat-label">已铸造</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="maxSupply">100</div>
+                    <div class="stat-label">最大供应</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="mintPrice">0.001</div>
+                    <div class="stat-label">铸造价格(ETH)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="whitelistStatus">❌</div>
+                    <div class="stat-label">白名单状态</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- 铸造区域 -->
+            <div class="card">
+                <h2>🎯 铸造 NFT</h2>
+                <div id="mintMessages"></div>
+
+                <div class="price-info">
+                    <strong>铸造价格:</strong> <span id="currentMintPrice">0.001 ETH</span><br>
+                    <small>白名单用户享受50%折扣</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="mintRecipient">接收地址:</label>
+                    <input type="text" id="mintRecipient" placeholder="0x..." />
+                </div>
+
+                <button class="btn btn-primary" id="mintNFT" style="width: 100%;">
+                    铸造 NFT
+                </button>
+            </div>
+
+            <!-- NFT展示区域 -->
+            <div class="card">
+                <h2>🖼️ 我的 NFT</h2>
+                <div id="nftMessages"></div>
+
+                <div class="form-group">
+                    <label for="tokenId">Token ID:</label>
+                    <input type="number" id="tokenId" placeholder="输入Token ID" min="1" />
+                    <button class="btn btn-secondary" id="loadNFT" style="margin-top: 10px; width: 100%;">
+                        加载 NFT
+                    </button>
+                </div>
+
+                <div id="nftDisplay" class="nft-display" style="display: none;">
+                    <div class="nft-preview" id="nftPreview"></div>
+                    <div class="nft-info">
+                        <h3 id="nftName">Simple Feature #1</h3>
+                        <p><strong>拥有者:</strong> <span id="nftOwner">-</span></p>
+                        <div class="attributes" id="nftAttributes"></div>
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-secondary" id="remintNFT">重新生成 (0.0005 ETH)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理员区域 -->
+        <div class="admin-section" id="adminSection" style="display: none;">
+            <h2>👑 管理员控制面板</h2>
+            <div id="adminMessages"></div>
+
+            <div class="admin-controls">
+                <div>
+                    <h3>Owner铸造</h3>
+                    <div class="form-group">
+                        <input type="text" id="ownerMintRecipient" placeholder="接收地址" />
+                        <button class="btn btn-primary" id="ownerMint">免费铸造</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>白名单管理</h3>
+                    <div class="form-group">
+                        <input type="text" id="whitelistAddress" placeholder="地址" />
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <button class="btn btn-primary" id="addWhitelist">添加</button>
+                            <button class="btn btn-secondary" id="removeWhitelist">移除</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>资金管理</h3>
+                    <p>合约余额: <span id="contractBalance">0 ETH</span></p>
+                    <button class="btn btn-primary" id="withdrawFunds">提取资金</button>
+                </div>
+
+                <div>
+                    <h3>Owner重新铸造</h3>
+                    <div class="form-group">
+                        <input type="number" id="ownerRemintTokenId" placeholder="Token ID" min="1" />
+                        <button class="btn btn-primary" id="ownerRemint">免费重新生成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/app.js"></script>
+</body>
+
+</html>
